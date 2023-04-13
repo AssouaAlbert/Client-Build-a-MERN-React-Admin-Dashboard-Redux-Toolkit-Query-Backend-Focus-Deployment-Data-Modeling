@@ -2,8 +2,8 @@ import React from "react";
 import { useGetCustomersQuery } from "state/api";
 import Header from "components/Header";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
-import { useTheme } from "@emotion/react";
+import { Box,useTheme } from "@mui/material";
+
 const columns = [
   {
     field: "_id",
@@ -53,8 +53,9 @@ function Customers() {
       <Header title={"CUSTOMERS"} subtitle={"List of Customers"} />
       <Box
         mt="40px"
-        height="50vh"
-        p="auto 0.4rem"
+        height="75vh"
+        p={"2rem"}
+        width={"100%"}
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -85,6 +86,7 @@ function Customers() {
           getRowId={(row) => row._id}
           rows={data || []}
           columns={columns}
+          autoPageSize
         />
       </Box>
     </Box>

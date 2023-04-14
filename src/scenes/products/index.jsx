@@ -73,11 +73,11 @@ const Product = ({
           <Typography> Supply Left: {supply} </Typography>
           <Typography>
             {" "}
-            Yearly Sales This Year: {productStat.yearlySalesTotal}{" "}
+            Yearly Sales This Year: {productStat[0].yearlySalesTotal}
           </Typography>
           <Typography>
             {" "}
-            Yearly Units Sold This Year: {productStat.yearlyTotalSoldUnits}
+            Yearly Units Sold This Year: {productStat[0].yearlyTotalSoldUnits}
           </Typography>
         </CardContent>
       </Collapse>

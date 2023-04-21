@@ -57,7 +57,7 @@ function Transactions() {
   });
   return (
     <Box>
-      <Header title={"TRANSACTIONS"} subtitle={"LIST OF tRNSACTIONS"} />
+      <Header title={"TRANSACTIONS"} subtitle={"LIST OF TRNSACTIONS"} />
       <Box
         mt="40px"
         height="80vh"

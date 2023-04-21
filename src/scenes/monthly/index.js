@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
 import Header from "components/Header";
 import { ResponsiveLine } from "@nivo/line";
@@ -6,16 +6,13 @@ import { useGetSalesQuery } from "state/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function Daily() {
-  const [startDate, setStartDate] = useState(new Date("2021/02/08"));
-  const [endDate, setEndDate] = useState(new Date("2021/03/10"));
+function Monthly() {
   const { data } = useGetSalesQuery();
   const theme = useTheme();
-  const [formattedData] = useMemo(
-    () => {
+  const [formattedData] = useMemo(() => {
     if (!data) return [];
 
-    const { dailyData } = data;
+    const { monthlyData } = data;
     const totalSalesLine = {
       id: "totalSales",
       color: theme.palette.secondary.main,
@@ -27,50 +24,24 @@ function Daily() {
       data: [],
     };
 
-    Object.values(dailyData).forEach(({ date, totalUnits, totalSales }) => {
-      const dateFormatted = new Date(date);
-      if (dateFormatted >= startDate && dateFormatted <= endDate) {
-        const splitDate = date.substring(date.indexOf("-") + 1);
+    Object.values(monthlyData).forEach(({ month, totalUnits, totalSales }) => {
         totalSalesLine.data = [
           ...totalSalesLine.data,
-          { x: splitDate, y: totalSales },
+          { x: month, y: totalSales },
         ];
         totalUnitsLine.data = [
           ...totalUnitsLine.data,
-          { x: splitDate, y: totalUnits },
-        ];
+          { x: month, y: totalUnits },]
       }
-    });
+    );
     const formattedData = [totalSalesLine, totalUnitsLine];
     return [formattedData];
-  }, [data, startDate, endDate]); //eslint-disable-line
+  }, [data]); //eslint-disable-line
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="DAILY SALES" subtitle="Chart of daily sales" />
+      <Header title="MONTHLY SALES" subtitle="Chart of monthly sales" />
       <Box height="75vh" width={"100%"}>
-        <Box display="flex" justifyContent="flex-end">
-          <Box>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-            />
-          </Box>
-          <Box>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-            />
-          </Box>
-        </Box>
-
         {data ? (
           <ResponsiveLine
             data={formattedData}
@@ -126,7 +97,7 @@ function Daily() {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 90,
-              legend: "Day",
+              legend: "Month",
               legendOffset: 60,
               legendPosition: "middle",
             }}
@@ -182,4 +153,4 @@ function Daily() {
   );
 }
 
-export default Daily;
+export default Monthly;
